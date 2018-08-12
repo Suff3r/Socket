@@ -42,6 +42,15 @@ sockfd:
     socket函数返回套接字描述符
 serv_addr:
     服务器IP地址结构指针
+*********************************************************
+***********************function**************************
+    their_addr.sin_family = AF_INET;
+    their_addr.sin_port = htons(8000);
+    their_addr.sin_addr.s_addr=inet_addr("127.0.0.1"); 
+    their_addr.sin_addr.s_addr=INADDR_ANY;
+ 
+    inet_ntoa(client_addr.sin_addr)//get the client ip.
+*********************************************************
 addrlen:
     结构体指针的长度
 4、int listen(int sockfd, int backlog)
