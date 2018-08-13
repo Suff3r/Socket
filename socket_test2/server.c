@@ -23,7 +23,8 @@ typedef struct _recvmodel
 
 void *send_thread(void *arg)
 {
-    int fd = (int)arg;
+	printf("fd = %d\n",*(int *)arg);
+    int fd = *(int *)arg;
     char buf[64] = {0};
     while(1)
     {
