@@ -7,11 +7,11 @@
 
 1. 有连接的socket
 1) server: socket() -> bind() -> listen() -> accept() -> read() -> write()
-2) client :                     socket() -> connect() -> write() -> read()
+2) client :                    socket() -> connect() -> write() -> read()
 
 2.无连接的socket
 1) server: socket() -> bind() -> recvfrom() -> sendto()
-2) client:  socket() -> bind() -> sendto() -> recvfrom()
+2) client: socket() -> bind() -> sendto() -> recvfrom()
 
 1、int socket(int family,int type,int protocol)l0
 family:
@@ -84,3 +84,5 @@ len:
 https://www.cnblogs.com/uestc-mm/p/7630145.html
 https://blog.csdn.net/m0_37947204/article/details/80489431
 https://blog.csdn.net/qq_33850438/article/details/52055390
+
+
