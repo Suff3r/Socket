@@ -17,7 +17,7 @@ int main(int argc, const char* argv[])
     }
     int st;
     int port = atoi(argv[2]);
-    char *ipaddr = "";
+    char ipaddr[30] = {0};
 
     strcpy(ipaddr, argv[1]);
     st = connect_server(ipaddr, port);

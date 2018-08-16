@@ -5,7 +5,7 @@
 	> Created Time: Wed 15 Aug 2018 05:02:39 AM PDT
  ************************************************************************/
 
-#include<pub.h>
+#include "pub.h"
 
 #define MAXBUF 1024
 
@@ -23,7 +23,7 @@ int socket_create()
 int socket_reuseaddr(int st)
 {
     int on = 1;
-    if (setsockopt(st, SOL_SOCKET, SO_REUSEADDR, &on, sizof(on)) == -1)
+    if (setsockopt(st, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)) == -1)
     {
         printf("Creat socket failed! error message:%s\n",strerror(errno));
         close_socket(st);
@@ -41,7 +41,7 @@ int socket_bind(int st, int port)
     serv_addr.sin_port = htons(port);
     serv_addr.sin_addr.s_addr = htonl(INADDR_ANY);
 
-    if (bind(st, (struct sockadrr*)&serv_addr, sizeof(serv_addr)) == -1)
+    if (bind(st, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) == -1)
     {
         printf("Bind failed! error message:%s\n", strerror(errno));
         close_socket(st);
@@ -94,8 +94,8 @@ int connect_server(char *ipaddr, int port)
     memset(&clnt_addr, 0, sizeof(clnt_addr));
     clnt_addr.sin_family = AF_INET;
     clnt_addr.sin_port = htons(port);
-    clnt_addr.sin_addr_s_addr = inet_addr(ipaddr);
-    if (connect(st, (struct sockaddr_in*)&clnt_addr, sizeof(clnt_addr)) == -1)
+    clnt_addr.sin_addr.s_addr = inet_addr(ipaddr);
+    if (connect(st, (struct sockaddr *)&clnt_addr, sizeof(clnt_addr)) == -1)
     {
         printf("connect failed! error message:%s\n",strerror(errno));
         return -1;
@@ -112,7 +112,7 @@ int setnonblock(int st)
         printf("Fcntl failed! error message:%s\n", strerror(errno));
         return -1;
     }
-    opts |= O_NONBLCOK;
+    opts |= O_NONBLOCK;
     if (fcntl(st, F_SETFL, opts) < 0)
     {
         printf("Fcntl failed! error message:%s\n", strerror(errno));
@@ -123,7 +123,7 @@ int setnonblock(int st)
 
 void sockaddr_toa(const struct sockaddr_in* addr, char *ipaddr)
 {
-    unsigned char *p = (unsigned char *)&(addr.sin_addr.s_addr);
+    unsigned char *p = (unsigned char *)&(addr->sin_addr.s_addr);
     sprintf(ipaddr, "%u.%u.%u.%u", p[0], p[1], p[2], p[3]);
 }
 
@@ -141,7 +141,7 @@ int server_accept(int st)
         printf("Accept client failed! error message:%s\n", strerror(errno));
         return -1;
     }
-    sockaddr_toa(clnt_addr, ipaddr);
+    sockaddr_toa(&clnt_addr, ipaddr);
     printf("Accept by %s\n", ipaddr);
 
     return clnt_st;
