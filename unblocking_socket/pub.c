@@ -123,6 +123,10 @@ int setnonblock(int st)
 
 void sockaddr_toa(const struct sockaddr_in* addr, char *ipaddr)
 {
+    if (addr == NULL || ipaddr == NULL)
+    {
+        return;
+    }
     unsigned char *p = (unsigned char *)&(addr->sin_addr.s_addr);
     sprintf(ipaddr, "%u.%u.%u.%u", p[0], p[1], p[2], p[3]);
 }
@@ -130,7 +134,7 @@ void sockaddr_toa(const struct sockaddr_in* addr, char *ipaddr)
 int server_accept(int st)
 {
     int clnt_st;
-    char *ipaddr;
+    char ipaddr[30] = {0};
     struct sockaddr_in clnt_addr;
     socklen_t len = sizeof(clnt_addr);
     memset(&clnt_addr, 0, len);
