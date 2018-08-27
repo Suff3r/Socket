@@ -2,7 +2,7 @@
 CC=gcc
 SRCS1=epoll_client.c\
 	pub.c
-SRCS2=epoll_server_select.c\
+SRCS2=epoll_server.c\
     pub.c
 OBJS1=$(SRCS1:.c=.o)
 OBJS2=$(SRCS2:.c=.o)
